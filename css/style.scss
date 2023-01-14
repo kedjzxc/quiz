@@ -38,22 +38,48 @@ body {
         margin-bottom: 60px;
     }
     &__title-end {
-        margin-top: 270px;
+        margin-top: 160px;
     }
     &__question {
         text-align: center;
         font-size: 50px;
         font-weight: 600;
     }
+    &__restart-btn--block {
+        display: none;
+
+        &.active {
+            display: block;
+            margin-top: 200px;
+            text-align: center;
+        }
+    }
+    &__restart-btn {
+        border: none;
+        background: none;
+        width: 150px;
+        max-width: 100%;
+        height: 60px;
+        border-radius: 15px;
+        background-color: #f3e3b6;
+        text-transform: uppercase;
+        font-weight: bold;
+        letter-spacing: 0.4;
+        cursor: pointer;
+        -webkit-box-shadow: -2px 3px 17px 1px rgba(34, 60, 80, 0.25);
+        -moz-box-shadow: -2px 3px 17px 1px rgba(34, 60, 80, 0.25);
+        box-shadow: -2px 3px 17px 1px rgba(34, 60, 80, 0.25);
+    }
     &__answer-box {
-        padding: 20px;
+        width: 95%;
+        margin: 0 auto;
+        padding: 50px 30px;
         background-color: rgb(232, 249, 253);
         display: flex;
         flex-direction: column;
         justify-content: space-between;
         gap: 40px;
-        border-bottom-left-radius: 30px;
-        border-bottom-right-radius: 30px;
+        border-radius: 30px;
     }
     &__answer-box--end {
         padding: 0;
@@ -70,21 +96,23 @@ body {
         -webkit-box-shadow: -2px 3px 17px 1px rgba(34, 60, 80, 0.25);
         -moz-box-shadow: -2px 3px 17px 1px rgba(34, 60, 80, 0.25);
         box-shadow: -2px 3px 17px 1px rgba(34, 60, 80, 0.25);
-        &:nth-child(1) {
-            margin-top: 40px;
-        }
+        // &:nth-child(1) {
+        //     margin-top: 40px;
+        // }
     }
     &__answer-radio {
         cursor: pointer;
+        
     }
     &__answer-text {
         color: #fff;
         font-size: 24px;
         cursor: pointer;
-        
     }
     &__answer-btn-block {
         text-align: center;
+        margin-top: 30px;
+        margin-bottom: 30px;
     }
     &__answer-btn {
         border: none;
@@ -101,5 +129,8 @@ body {
         -webkit-box-shadow: -2px 3px 17px 1px rgba(34, 60, 80, 0.25);
         -moz-box-shadow: -2px 3px 17px 1px rgba(34, 60, 80, 0.25);
         box-shadow: -2px 3px 17px 1px rgba(34, 60, 80, 0.25);
+        &.hidden {
+            display: none;
+        }
     }
 }

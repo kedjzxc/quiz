@@ -12,76 +12,108 @@ const questions = [
     {
         question: '11^2',
         answers: [112, 121, 144],
+        correct: 2
+    },
+    {
+        question: '(-2)^2 * (-2)^3',
+        answers: [-64, 32, -32],
+        correct: 3
+    },
+    {
+        question: '(0,25)^6 * 8^6',
+        answers: [8, 128, 64],
+        correct: 3
+    }, 
+    {
+        question: '6 * 0,5^6 : 0,5^3',
+        answers: [0.75, 1.5, 3],
+        correct: 1
+    }, 
+    {
+        question: '42^4 : 14^4',
+        answers: [27, 243, 81],
         correct: 3
     }
 ]
 const quiz = document.querySelector('.quiz__question')
 const quizTitle = document.querySelector('.quiz__title')
 const quizBox = document.querySelector('.quiz__answer-box')
-const answerBox = document.querySelectorAll('.quiz__answer')
-const quizAnswers = document.querySelectorAll('.quiz__answer-text')
-const quizAnswer1 = document.querySelector('#answer1')
-const quizAnswer2 = document.querySelector('#answer2')
-const quizAnswer3 = document.querySelector('#answer3')
 const answerBtn = document.querySelector('.quiz__answer-btn')
+const restartBtnBlock = document.querySelector('.quiz__restart-btn--block')
+const restartBtn = document.querySelector('.quiz__restart-btn')
 
 let questionIndex = 0
-let correctAnswer = questions[questionIndex].correct
+let score = 0
 
 clear()
-foo()
+show()
 answerBtn.onclick = checkAnswer
 
 
+function show() {
+    const title = questions[questionIndex].question
+    quiz.innerHTML = title
+    let answerNum = 1
+    questions[questionIndex]['answers'].forEach(item => {
+        const answerTemplate = `
+        <div class="quiz__answer">
+            <input value='%value%' class="quiz__answer-radio" type="radio" name="radio">
+            <label for="radio-1" class="quiz__answer-text">%answer%</label>
+        </div>
+        `
+        const answerText = answerTemplate.replace('%answer%', item).replace('%value%', answerNum)
+        quizBox.innerHTML += answerText
+        answerNum++
+        const answerBox = document.querySelectorAll('.quiz__answer')
+        const answerRadio = document.querySelectorAll('.quiz__answer-radio')
+        answerBox.forEach((answerItem, answerIndex) => {
+            answerRadio.forEach((radioItem, radioIndex) => {
+                answerItem.addEventListener('click', (e) => {
+                    if (answerIndex == radioIndex) {
+                        radioItem.checked = true
+                    }
+                })
+            })
+        })
+    })
+}
+
 function checkAnswer() {
+
     const checkedAnswer = quizBox.querySelector('input[type="radio"]:checked')
     if (!checkedAnswer) {
         return
     }
-    // if (checkedAnswer.value == correctAnswer) {
-    //     console.log('correct');
-    // }
-    // console.log(checkedAnswer.value);
-    // console.log(checkedAnswer);
+    const userAnswer = (checkedAnswer.value)
+    if (userAnswer == questions[questionIndex]['correct']) {
+        score++
+    }
+    console.log(score);
     if (questionIndex !== questions.length - 1) {
-        console.log('Not last');
         questionIndex++
         clear()
-        foo()
+        show()
     } else {
-        console.log('last');
+        restartBtnBlock.classList.add('active')
+        answerBtn.classList.add('hidden')
         clear()
         showResult()
     }
 }
-  
+
 function clear() {
     quiz.innerHTML = ''
-    // quizAnswers.forEach(item => {
-    //     item.innerHTML = ''
-    // })
-    quizAnswer1.innerHTML = ''
-    quizAnswer2.innerHTML = ''
-    quizAnswer3.innerHTML = ''
-}
-
-function foo() {
-    // console.log(questions[questionIndex].question);
-    // console.log(questions[questionIndex].answers[0]);
-    quiz.innerHTML = questions[questionIndex].question
-    quizAnswer1.innerHTML = questions[questionIndex].answers[0]
-    quizAnswer2.innerHTML = questions[questionIndex].answers[1]
-    quizAnswer3.innerHTML = questions[questionIndex].answers[2]
-
+    quizBox.innerHTML = ''
 }
 
 function showResult() {
     quizBox.classList.add('quiz__answer-box--end')
     quizTitle.classList.add('quiz__title-end')
     quizBox.innerHTML = ''
-    answerBox.innerHTML = ''
-    quizTitle.innerHTML = `You are cool!`
-    setTimeout(() => {
+    score == Math.floor(questions.length / 2 ) ? quizTitle.innerHTML = 'This is a good result' :
+    score > Math.floor(questions.length / 2 ) ? quizTitle.innerHTML = 'You are cool!' : quizTitle.innerHTML = 'You need to learn math'
+    restartBtn.onclick = function () {
         history.go()
-    }, 5000);
+    }
 }
+
